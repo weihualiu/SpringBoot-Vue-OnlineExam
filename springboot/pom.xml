@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.exam</groupId>
     <artifactId>exam</artifactId>
+    <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>examsystem</name>
     <description>online examsystem project for Spring Boot</description>
@@ -38,12 +39,29 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>org.mybatis.spring.boot</groupId>-->
             <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
             <!--<version>1.3.2</version>-->
         <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.1.2.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
@@ -79,6 +97,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
             <!--<plugin>-->
                 <!--<groupId>org.mybatis.generator</groupId>-->
                 <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
@@ -97,6 +129,14 @@
                 <!--</dependencies>-->
             <!--</plugin>-->
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/**.properties</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>
