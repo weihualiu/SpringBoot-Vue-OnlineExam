@@ -1,43 +1,26 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : ali_exam
- Source Server Type    : MySQL
- Source Server Version : 50727
- Source Host           : 47.107.78.99:3306
- Source Schema         : exam
-
- Target Server Type    : MySQL
- Target Server Version : 50727
- File Encoding         : 65001
-
- Date: 06/09/2019 17:37:57
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for admin
+-- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin`  (
-  `adminId` int(9) NOT NULL AUTO_INCREMENT COMMENT 'ID号',
-  `adminName` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '姓名',
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `userId` int(9) NOT NULL AUTO_INCREMENT COMMENT 'ID号',
+  `userName` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '姓名',
   `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '性别',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电话号码',
   `email` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电子邮箱',
   `pwd` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
   `cardId` varchar(18) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证号',
-  `role` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色(0管理员，1教师，2学生)',
-  PRIMARY KEY (`adminId`) USING BTREE,
+  `role` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色(0管理员，1老师，2学生)',
+  PRIMARY KEY (`userId`) USING BTREE,
   INDEX `sex`(`sex`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9528 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '管理员信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of admin
+-- Records of user
 -- ----------------------------
-INSERT INTO `admin` VALUES (9527, '超级管理员', '男', '13658377857', '1253838283@qq.com', '123456', '3132', '0');
+INSERT INTO `user` VALUES (0, '超级管理员', '男', 'auhiewuil@gmail.com', '123456', '', '0');
 
 -- ----------------------------
 -- Table structure for exam_manage
@@ -155,32 +138,6 @@ INSERT INTO `judge_question` VALUES (10011, '计算机网络', '利用BT下载�
 INSERT INTO `judge_question` VALUES (10012, '计算机网络', 'INTERNET上向朋友发送电子邮件,必须知道对方的真实姓名和家庭住址', 'F', NULL, 2, '1', NULL);
 
 -- ----------------------------
--- Table structure for message
--- ----------------------------
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE `message`  (
-  `id` int(9) NOT NULL AUTO_INCREMENT COMMENT '留言编号',
-  `title` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标题',
-  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '留言内容',
-  `time` date NULL DEFAULT NULL COMMENT '留言时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '留言表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of message
--- ----------------------------
-INSERT INTO `message` VALUES (2, '晚上加班,这感觉非常的nice', '今天是星期一的晚上,下班后回到宿舍继续写我的毕业设计,看着项目功能日渐丰满好开心哦,你们也要元气满满哦！', '2019-03-18');
-INSERT INTO `message` VALUES (15, '咸鱼', '我是一条咸鱼', '2019-03-18');
-INSERT INTO `message` VALUES (16, '今天中午吃什么', '今天去吃莲藕排骨汤吧，虽然也不好吃，但这里真的没什么东西可以吃了', '2019-03-18');
-INSERT INTO `message` VALUES (20, '这个网站不错', '博主大大好厉害，网页看着很清新呢，喜欢这样嘞风格。', '2019-03-18');
-INSERT INTO `message` VALUES (21, '男孩子', '哇，这么可爱，那肯定是男孩子呀。', '2019-03-18');
-INSERT INTO `message` VALUES (22, '好人', '你是个好人，可是我们不合适。', '2019-03-18');
-INSERT INTO `message` VALUES (25, '小乔', '花会枯萎，爱永不凋零，小乔要努力变强。', '2019-03-18');
-INSERT INTO `message` VALUES (26, '妲己', '妲己会一直爱主人，因为被设定成这样，来和妲己玩耍吧。', '2019-03-18');
-INSERT INTO `message` VALUES (27, '土味情话', '妈妈从小对我讲，不要早恋，遇到你以后，我决定不听妈妈的话了。', '2019-03-31');
-INSERT INTO `message` VALUES (35, '贝塔', '开坦克', '2019-09-05');
-
--- ----------------------------
 -- Table structure for multi_question
 -- ----------------------------
 DROP TABLE IF EXISTS `multi_question`;
@@ -291,37 +248,6 @@ INSERT INTO `paper_manage` VALUES (1001, 3, 10008);
 INSERT INTO `paper_manage` VALUES (1001, 3, 10001);
 
 -- ----------------------------
--- Table structure for replay
--- ----------------------------
-DROP TABLE IF EXISTS `replay`;
-CREATE TABLE `replay`  (
-  `messageId` int(255) NULL DEFAULT NULL COMMENT '留言编号',
-  `replayId` int(9) NOT NULL AUTO_INCREMENT COMMENT '回复编号',
-  `replay` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '内容',
-  `replayTime` date NULL DEFAULT NULL COMMENT '回复时间',
-  PRIMARY KEY (`replayId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '回复表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of replay
--- ----------------------------
-INSERT INTO `replay` VALUES (26, 3, '好呀，我来了，你别跑！', '2019-03-18');
-INSERT INTO `replay` VALUES (22, 4, '心疼你2秒钟', '2019-03-18');
-INSERT INTO `replay` VALUES (25, 5, '我也要变强', '2019-03-19');
-INSERT INTO `replay` VALUES (25, 6, '俺也一样', '2019-03-19');
-INSERT INTO `replay` VALUES (21, 7, '既然这样，那就迎男而上吧', '2019-03-19');
-INSERT INTO `replay` VALUES (16, 8, '那条街确实没什么东西可以吃了。。。', '2019-03-19');
-INSERT INTO `replay` VALUES (15, 9, '咸鱼其实还可以吃，而你,emmmm', '2019-03-19');
-INSERT INTO `replay` VALUES (21, 11, '我不怕人多', '2019-03-19');
-INSERT INTO `replay` VALUES (20, 12, '是嘞，还行。', '2019-03-19');
-INSERT INTO `replay` VALUES (26, 13, '我也爱你ε=(´ο｀*)))唉', '2019-03-19');
-INSERT INTO `replay` VALUES (27, 14, '你这个坏孩子', '2019-03-31');
-INSERT INTO `replay` VALUES (33, 18, '是的，今天是周一。', '2019-04-14');
-INSERT INTO `replay` VALUES (34, 19, '1111', '2019-04-16');
-INSERT INTO `replay` VALUES (34, 20, '2222', '2019-04-16');
-INSERT INTO `replay` VALUES (35, 21, '666', '2019-09-05');
-
--- ----------------------------
 -- Table structure for score
 -- ----------------------------
 DROP TABLE IF EXISTS `score`;
@@ -355,58 +281,5 @@ INSERT INTO `score` VALUES (24, 20190001, 20155008, '计算机网络', NULL, 88,
 INSERT INTO `score` VALUES (27, 20190001, 20154084, '计算机网络', NULL, 80, NULL, '2019-04-25');
 INSERT INTO `score` VALUES (30, 20190001, 20154084, '计算机网络', NULL, 0, NULL, '2019-04-29');
 INSERT INTO `score` VALUES (31, 20190001, 20154084, '计算机网络', NULL, 0, NULL, '2019-09-06');
-
--- ----------------------------
--- Table structure for student
--- ----------------------------
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE `student`  (
-  `studentId` int(9) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `studentName` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '姓名',
-  `grade` varchar(4) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '年级',
-  `major` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '专业',
-  `clazz` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '班级',
-  `institute` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '学院',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电话号码',
-  `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电子邮件',
-  `pwd` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
-  `cardId` varchar(18) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证号',
-  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '性别',
-  `role` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '2' COMMENT '角色(0管理员，1教师，2学生)',
-  PRIMARY KEY (`studentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20155009 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '学生信息表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of student
--- ----------------------------
-INSERT INTO `student` VALUES (20154001, '隔壁老王', '2015', '计算机科学与技术', '2', '软件工程学院', '13585439532', 'gblw@163.com', '123456', '3412312', '男', '2');
-INSERT INTO `student` VALUES (20154084, '大咸鱼', '2015', '计算机科学与技术', '2', '软件工程学院', '13658377857', '13658377857@sina.cn', '123456', '124123124535', '男', '2');
-INSERT INTO `student` VALUES (20155003, '张大宝', '2015', '信息工程', '1', '软件工程学院', '15583829425', '15583829425@163.com', '123456', '3242342', '男', '2');
-INSERT INTO `student` VALUES (20155007, '翠花', '2015', '网络工程', '1', '软件工程学院', '18734538457', '18734538457@163.com', '123456', '2423423', '女', '2');
-INSERT INTO `student` VALUES (20155008, '小王', '2015', '信息工程', '2', '软件工程学院', '15523619564', '15523619564@163.com', '123456', '500234199704022353', '男', '2');
-
--- ----------------------------
--- Table structure for teacher
--- ----------------------------
-DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE `teacher`  (
-  `teacherId` int(9) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `teacherName` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '姓名',
-  `institute` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '学院',
-  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '性别',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '电话号码',
-  `email` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '邮箱',
-  `pwd` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
-  `cardId` varchar(18) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证号',
-  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '职称',
-  `role` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色（0管理员，1教师，2学生）',
-  PRIMARY KEY (`teacherId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20081003 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '教师信息表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of teacher
--- ----------------------------
-INSERT INTO `teacher` VALUES (20081001, '张', '软件工程学院', '男', '13598458442', '13598458442@163.com', '123456', '423423283498', '讲师', '1');
-INSERT INTO `teacher` VALUES (20081002, '王大志', '软件工程学院', '男', '1231221312', '1231221312@163.com', '123456', '24241234', '讲师', '1');
 
 SET FOREIGN_KEY_CHECKS = 1;

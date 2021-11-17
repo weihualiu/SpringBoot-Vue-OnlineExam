@@ -1,13 +1,11 @@
 package com.exam.entity;
 
-public class Admin {
-    private Integer adminId;
+public class User {
+    private Integer userId;
 
-    private String adminName;
+    private String userName;
 
     private String sex;
-
-    private String tel;
 
     private String email;
 
@@ -17,20 +15,20 @@ public class Admin {
 
     private String role;
 
-    public Integer getAdminId() {
-        return adminId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getAdminName() {
-        return adminName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAdminName(String adminName) {
-        this.adminName = adminName == null ? null : adminName.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getSex() {
@@ -39,14 +37,6 @@ public class Admin {
 
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel == null ? null : tel.trim();
     }
 
     public String getEmail() {
