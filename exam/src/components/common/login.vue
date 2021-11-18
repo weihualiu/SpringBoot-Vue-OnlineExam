@@ -74,22 +74,17 @@ export default {
       }).then(res=>{
         let resData = res.data.data
         if(resData != null) {
+          this.$cookies.set("cname", resData.userName)
+          this.$cookies.set("cid", resData.userId)
+          this.$cookies.set("role",resData.role)
           switch(resData.role) {
             case "0":  //管理员
-              this.$cookies.set("cname", resData.adminName)
-              this.$cookies.set("cid", resData.adminId)
-              this.$cookies.set("role", 0)
               this.$router.push({path: '/index' }) //跳转到首页
               break
             case "1": //教师
-              this.$cookies.set("cname", resData.teacherName)
-              this.$cookies.set("cid", resData.teacherId)
-              this.$cookies.set("role", 1)
               this.$router.push({path: '/index' }) //跳转到教师用户
               break
             case "2": //学生
-              this.$cookies.set("cname", resData.studentName)
-              this.$cookies.set("cid", resData.studentId)
               this.$router.push({path: '/student'})
               break
           }
