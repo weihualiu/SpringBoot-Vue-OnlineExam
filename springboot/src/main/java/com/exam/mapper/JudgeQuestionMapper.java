@@ -22,6 +22,7 @@ public interface JudgeQuestionMapper {
 
     /**
      * 查询最后一条记录的questionId
+     *
      * @return JudgeQuestion
      */
     @Select("select questionId from judge_question order by questionId desc limit 1")
@@ -32,5 +33,5 @@ public interface JudgeQuestionMapper {
     int add(JudgeQuestion judgeQuestion);
 
     @Select("select questionId from judge_question  where subject=#{subject}  order by rand() desc limit #{pageNo}")
-    List<Integer> findBySubject(String subject,Integer pageNo);
+    List<Integer> findBySubject(String subject, Integer pageNo);
 }

@@ -16,5 +16,5 @@ public interface MultiQuestionService {
 
     int add(MultiQuestion multiQuestion);
 
-    List<Integer> findBySubject(String subject,Integer pageNo);
+    List<Integer> findBySubject(String subject, Integer pageNo);
 }

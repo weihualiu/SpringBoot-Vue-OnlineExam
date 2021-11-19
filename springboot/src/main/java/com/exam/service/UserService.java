@@ -18,6 +18,7 @@ public interface UserService {
 
     /**
      * 根据角色获取用户列表
+     *
      * @param roleId 角色类型
      * @return
      */

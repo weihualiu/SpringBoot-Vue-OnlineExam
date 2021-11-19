@@ -16,5 +16,5 @@ public interface FillQuestionService {
 
     int add(FillQuestion fillQuestion);
 
-    List<Integer> findBySubject(String subject,Integer pageNo);
+    List<Integer> findBySubject(String subject, Integer pageNo);
 }

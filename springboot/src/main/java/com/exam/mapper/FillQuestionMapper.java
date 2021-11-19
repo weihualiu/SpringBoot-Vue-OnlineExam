@@ -19,16 +19,17 @@ public interface FillQuestionMapper {
 
     /**
      * 查询最后一条questionId
+     *
      * @return FillQuestion
      */
     @Select("select questionId from fill_question order by questionId desc limit 1")
     FillQuestion findOnlyQuestionId();
 
-    @Options(useGeneratedKeys = true,keyProperty ="questionId" )
+    @Options(useGeneratedKeys = true, keyProperty = "questionId")
     @Insert("insert into fill_question(subject,question,answer,analysis,level,section) values " +
             "(#{subject,},#{question},#{answer},#{analysis},#{level},#{section})")
     int add(FillQuestion fillQuestion);
 
     @Select("select questionId from fill_question where subject = #{subject} order by rand() desc limit #{pageNo}")
-    List<Integer> findBySubject(String subject,Integer pageNo);
+    List<Integer> findBySubject(String subject, Integer pageNo);
 }

@@ -16,7 +16,7 @@ public interface ScoreMapper {
      * @param score 添加一条成绩记录
      * @return
      */
-    @Options(useGeneratedKeys = true,keyProperty = "scoreId")
+    @Options(useGeneratedKeys = true, keyProperty = "scoreId")
     @Insert("insert into score(examCode,studentId,subject,ptScore,etScore,score,answerDate) values(#{examCode},#{studentId},#{subject},#{ptScore},#{etScore},#{score},#{answerDate})")
     int add(Score score);
 
@@ -32,7 +32,6 @@ public interface ScoreMapper {
     List<Score> findById(Integer studentId);
 
     /**
-     *
      * @return 查询每位学生的学科分数。 max其实是假的，为了迷惑老师，达到一次考试考生只参加了一次的效果
      */
     @Select("select max(etScore) as etScore from score where examCode = #{examCode} group by studentId")

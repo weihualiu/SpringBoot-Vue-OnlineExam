@@ -21,7 +21,7 @@ public interface UserMapper {
             "email = #{email},pwd = #{pwd},cardId = #{cardId},role = #{role} where userId = #{userId}")
     public int update(User user);
 
-    @Options(useGeneratedKeys = true,keyProperty = "userId")
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
     @Insert("insert into user(userName,sex,email,pwd,cardId,role) " +
             "values(#{userName},#{sex},#{email},#{pwd},#{cardId},#{role})")
     public int add(User user);

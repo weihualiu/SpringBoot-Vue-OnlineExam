@@ -15,6 +15,7 @@ public class PaperServiceImpl implements PaperService {
 
     @Autowired
     private PaperMapper paperMapper;
+
     @Override
     public List<PaperManage> findAll() {
         return paperMapper.findAll();

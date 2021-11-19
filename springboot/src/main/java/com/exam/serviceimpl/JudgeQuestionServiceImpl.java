@@ -38,6 +38,6 @@ public class JudgeQuestionServiceImpl implements JudgeQuestionService {
 
     @Override
     public List<Integer> findBySubject(String subject, Integer pageNo) {
-        return judgeQuestionMapper.findBySubject(subject,pageNo);
+        return judgeQuestionMapper.findBySubject(subject, pageNo);
     }
 }
