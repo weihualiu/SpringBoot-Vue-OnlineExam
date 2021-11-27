@@ -7,17 +7,15 @@ import lombok.Data;
 public class JudgeQuestion {
     private Integer questionId;
 
-    private String subject;
-
     private String question;
 
     private String answer;
 
-    private String level;
-
-    private String section;
+    private String analysis; //题目解析
 
     private Integer score;
 
-    private String analysis; //题目解析
+    private Integer typeId;
+
+    private String level;
 }

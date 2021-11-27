@@ -1,5 +1,7 @@
 package com.exam.serviceimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.User;
 import com.exam.mapper.UserMapper;
 import com.exam.service.UserService;
@@ -15,13 +17,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<User> findAll() {
-        return userMapper.findAll();
-    }
-
-    @Override
-    public User findById(Integer userId) {
-        return userMapper.findById(userId);
+    public int add(User user) {
+        return userMapper.add(user);
     }
 
     @Override
@@ -35,12 +32,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int add(User user) {
-        return 0;
+    public List<User> findAll() {
+        return userMapper.findAll();
+    }
+
+    @Override
+    public User findById(Integer userId) {
+        return userMapper.findById(userId);
+    }
+
+    @Override
+    public IPage<User> findByPage(Page page) {
+        return userMapper.findByPage(page);
     }
 
     @Override
     public List<User> findALLByRole(String roleId) {
         return userMapper.findAllByRole(roleId);
+    }
+
+    @Override
+    public List<User> findUsersById(Integer paperId) {
+        return userMapper.findUsersById(paperId);
     }
 }

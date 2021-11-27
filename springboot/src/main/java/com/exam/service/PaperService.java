@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.PaperManage;
 
-import java.util.List;
-
 public interface PaperService {
 
-    List<PaperManage> findAll();
+    IPage<PaperManage> findAll(Page page);
 
-    List<PaperManage> findById(Integer paperId);
+    PaperManage findById(Integer paperId);
 
     int add(PaperManage paperManage);
+
+    int update(PaperManage paperManage);
+
+    IPage<PaperManage> findByUserId(Page page, Integer userId);
 }

@@ -4,13 +4,11 @@ import com.exam.util.ApiResultHandler;
 import com.google.gson.Gson;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "sessionFilter", urlPatterns = {"/*"})
 public class SessionFilter implements Filter {
     String[] includeUrls = new String[]{"/login", "/logout"};
 
@@ -36,7 +34,7 @@ public class SessionFilter implements Filter {
                 response.setCharacterEncoding("utf-8");
                 response.setHeader("Content-Type", "text/html;charset=UTF-8");
                 Gson gson = new Gson();
-                String pleaseLogin = gson.toJson(ApiResultHandler.buildApiResult(200, "请登录！", null));
+                String pleaseLogin = gson.toJson(ApiResultHandler.buildApiResult(100, "请登录！", null));
                 response.getWriter().write(pleaseLogin);
             }
         }

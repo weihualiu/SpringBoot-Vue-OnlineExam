@@ -8,13 +8,23 @@ import java.util.List;
 
 public interface FillQuestionService {
 
-    List<FillQuestion> findByIdAndType(Integer paperId);
+    int add(FillQuestion fillQuestion);
 
-    IPage<FillQuestion> findAll(Page<FillQuestion> page);
+    int deleteById(int questionId);
+
+    int update(FillQuestion question);
+
+    List<FillQuestion> findAll();
+
+    List<FillQuestion> findById(Integer paperId);
 
     FillQuestion findOnlyQuestionId();
 
-    int add(FillQuestion fillQuestion);
+    IPage<FillQuestion> findByPage(Page<?> page);
 
-    List<Integer> findBySubject(String subject, Integer pageNo);
+    IPage<FillQuestion> findByTypeAndPage(Page<?> page,String subject);
+
+    List<FillQuestion> findByIdAndType(Integer paperId);
+
+    List<FillQuestion> findBySubject(List<Integer> typeIds);
 }

@@ -1,26 +1,28 @@
 package com.exam.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    public List<User> findAll();
+    int add(User user);
 
-    public User findById(Integer userId);
+    int update(User user);
 
-    public int deleteById(int userId);
+    int deleteById(int userId);
 
-    public int update(User user);
+    List<User> findAll();
 
-    public int add(User user);
+    User findById(Integer userId);
 
+    IPage<User> findByPage(Page page);
     /**
      * 根据角色获取用户列表
-     *
-     * @param roleId 角色类型
-     * @return
      */
-    public List<User> findALLByRole(String roleId);
+    List<User> findALLByRole(String roleId);
+
+    List<User> findUsersById(Integer paperId);
 }

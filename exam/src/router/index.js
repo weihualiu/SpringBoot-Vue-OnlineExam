@@ -34,20 +34,12 @@ export default new Router({
           component: () => import('@/components/teacher/allStudentsGrade')
         },
         {
-          path: '/examDescription', //考试管理功能描述
-          component: () => import('@/components/teacher/examDescription')
-        },
-        {
           path: '/selectExam', //查询所有考试
           component: () => import('@/components/teacher/selectExam')
         },
         {
           path: '/addExam', //添加考试
           component: () => import('@/components/teacher/addExam')
-        },
-        {
-          path: '/answerDescription', //题库管理功能介绍
-          component: ()=> import('@/components/teacher/answerDescription')
         },
         {
           path: '/selectAnswer', //查询所有题库
@@ -62,20 +54,20 @@ export default new Router({
           component: () => import('@/components/teacher/addAnswerChildren')
         },
         {
-          path: '/studentManage', //学生管理界面
-          component: () => import('@/components/teacher/studentManage')
+          path: '/userManage',
+          component: () => import('@/components/admin/userManage')
         },
         {
-          path: '/addStudent', //添加学生
-          component: () => import('@/components/teacher/addStudent')
+          path: '/addUser',
+          component: () => import ('@/components/admin/addUser')
         },
         {
-          path: '/teacherManage',
-          component: () => import('@/components/admin/tacherManage')
+          path: '/questionChapterManage',
+          component: () => import('@/components/admin/questionChapterManage')
         },
         {
-          path: '/addTeacher',
-          component: () => import ('@/components/admin/addTeacher')
+          path: '/addQuestionChapter',
+          component: () => import ('@/components/admin/addQuestionChapter')
         }
       ]
     },
@@ -86,12 +78,11 @@ export default new Router({
         {path:"/",component: ()=> import('@/components/student/myExam')},
         {path:'/startExam', component: () => import('@/components/student/startExam')},
         {path: '/manager', component: () => import('@/components/student/manager')},
-        {path: '/examMsg', component: () => import('@/components/student/examMsg')},
-        {path: '/message', component: () => import('@/components/student/message')},
+        {path: '/examMsg', name:"examMsg", component: () => import('@/components/student/examMsg')},
         {path: '/studentScore', component: () => import("@/components/student/answerScore")},
         {path: '/scoreTable', component: () => import("@/components/student/scoreTable")}
       ]
     },
-    {path: '/answer',component: () => import('@/components/student/answer')}
+    {path: '/answer', name: "answer", component: () => import('@/components/student/answer')}
   ]
 })

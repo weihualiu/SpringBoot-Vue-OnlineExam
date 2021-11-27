@@ -6,19 +6,11 @@ import java.util.Date;
 
 @Data
 public class Score {
-    private Integer examCode;
+    private Integer userId;
 
-    private Integer studentId;
-
-    private String subject;
-
-    private Integer ptScore;
-
-    private Integer etScore;
+    private Integer paperId;
 
     private Integer score;
-
-    private Integer scoreId;
 
     private String answerDate;
 }

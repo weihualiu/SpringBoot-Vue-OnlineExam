@@ -5,12 +5,11 @@
      <div class="top">
        <ul class="item">
          <li><i class="iconfont icon-menufold icon20" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
-         <li>{{examData.type}}-{{examData.source}}</li>
+         <li>{{examData.paperManage.description}}</li>
          <li @click="flag = !flag">
            <i class="iconfont icon-user icon20"></i>
            <div class="msg"  v-if="flag" @click="flag = !flag">
              <p>姓名：{{userInfo.name}}</p>
-             <p>准考证号:  {{userInfo.id}}</p>
            </div>
          </li>
          <li><i class="iconfont icon-arrLeft icon20"></i></li>
@@ -40,7 +39,7 @@
             </ul>
             <div class="l-bottom">
               <div class="item">
-                <p>选择题部分</p>
+                <p>填空题部分</p>
                 <ul>
                   <li v-for="(list, index1) in topic[1]" :key="index1">
                     <a href="javascript:;" 
@@ -53,7 +52,7 @@
                 </ul>
               </div>
               <div class="item">
-                <p>填空题部分</p>
+                <p>选择题部分</p>
                 <ul>
                   <li v-for="(list, index2) in topic[2]" :key="index2">
                     <a href="javascript:;" @click="fill(index2)" :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span :class="{'mark': topic[2][index2].isMark == true}"></span>{{topicCount[0]+index2+1}}</a>
@@ -82,22 +81,7 @@
           </div>
           <div class="content">
             <p class="topic"><span class="number">{{number}}</span>{{showQuestion}}</p>
-            <div v-if="currentType == 1">
-              <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
-                <el-radio :label="1">{{showAnswer.answerA}}</el-radio>
-                <el-radio :label="2">{{showAnswer.answerB}}</el-radio>
-                <el-radio :label="3">{{showAnswer.answerC}}</el-radio>
-                <el-radio :label="4">{{showAnswer.answerD}}</el-radio>
-              </el-radio-group>
-              <div class="analysis" v-if="isPractice">
-                <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{reduceAnswer.rightAnswer}}</span></li>
-                  <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{reduceAnswer.analysis == null ? '暂无解析': reduceAnswer.analysis}}</li>
-                </ul>
-              </div>
-            </div>
-            <div class="fill" v-if="currentType == 2">
+            <div class="fill" v-if="currentType ==1">
               <div v-for="(item,currentIndex) in part" :key="currentIndex">
                 <el-input placeholder="请填在此处"
                   v-model="fillAnswer[index][currentIndex]"
@@ -110,6 +94,21 @@
                   <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[2][index].answer}}</span></li>
                   <li><el-tag>题目解析：</el-tag></li>
                   <li>{{topic[2][index].analysis == null ? '暂无解析': topic[2][index].analysis}}</li>
+                </ul>
+              </div>
+            </div>
+            <div v-if="currentType == 2">
+              <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
+                <el-radio :label="1">{{showAnswer.answerA}}</el-radio>
+                <el-radio :label="2">{{showAnswer.answerB}}</el-radio>
+                <el-radio :label="3">{{showAnswer.answerC}}</el-radio>
+                <el-radio :label="4">{{showAnswer.answerD}}</el-radio>
+              </el-radio-group>
+              <div class="analysis" v-if="isPractice">
+                <ul>
+                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{reduceAnswer.rightAnswer}}</span></li>
+                  <li><el-tag>题目解析：</el-tag></li>
+                  <li>{{reduceAnswer.analysis == null ? '暂无解析': reduceAnswer.analysis}}</li>
                 </ul>
               </div>
             </div>
@@ -156,7 +155,7 @@ export default {
       isFillClick: false, //选择题是否点击标识符
       slider_flag: true, //左侧显示隐藏标识符
       flag: false, //个人信息显示隐藏标识符
-      currentType: 1, //当前题型类型  1--选择题  2--填空题  3--判断题
+      currentType: 1, //当前题型类型  1--填空题  2--选择题  3--判断题
       radio: [], //保存考生所有选择题的选项
       title: "请选择正确的选项",
       index: 0, //全局index
@@ -209,39 +208,39 @@ export default {
     getExamData() { //获取当前试卷所有信息
       let date = new Date()
       this.startTime = this.getTime(date)
-      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-        this.examData = { ...res.data.data} //获取考试详情
-        this.index = 0
-        this.time = this.examData.totalScore //获取分钟数
-        let paperId = this.examData.paperId
-        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-          this.topic = {...res.data}
-          let reduceAnswer = this.topic[1][this.index]
-          this.reduceAnswer = reduceAnswer
-          let keys = Object.keys(this.topic) //对象转数组
-          keys.forEach(e => {
-            let data = this.topic[e]
-            this.topicCount.push(data.length)
-            let currentScore = 0
-            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-              currentScore += data[i].score
-            }
-            this.score.push(currentScore) //把每种题型总分存入score
-          })
-          let len = this.topicCount[1]
-          let father = []
-          for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
-            let children = [null,null,null,null]
-            father.push(children)
-          }
-          this.fillAnswer = father
-          let dataInit = this.topic[1]
-          this.number = 1
-          this.showQuestion = dataInit[0].question
-          this.showAnswer = dataInit[0]
-        })
+      // 获取上个页面存储全部试卷数据
+      this.examData = JSON.parse(sessionStorage.getItem("paperQuestions"));
+      console.log("examData: " + this.examData);
+      this.examCode = this.examData.paperManage.paperId;
+      this.time = this.examData.paperManage.totalTime //获取分钟数
+      this.topic = this.examData.questions;
+      //this.topic.push(this.examData.questions.multi);
+      //this.topic.push(this.examData.questions.judge);
+
+      this.index = 0
+      let reduceAnswer = this.topic.fill[this.index]
+      this.reduceAnswer = reduceAnswer
+      let keys = Object.keys(this.topic.fill) //对象转数组
+      keys.forEach(e => {
+        let data = this.topic.fill[e]
+        this.topicCount.push(data.length)
+        let currentScore = 0
+        for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
+          currentScore += data[i].score
+        }
+        this.score.push(currentScore) //把每种题型总分存入score
       })
+      let len = this.topicCount[1]
+      let father = []
+      for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
+        let children = [null,null,null,null]
+        father.push(children)
+      }
+      this.fillAnswer = father
+      let dataInit = this.topic[1]
+      this.number = 1
+      this.showQuestion = dataInit[0].question
+      this.showAnswer = dataInit[0]
     },
     change(index) { //选择题
       this.index = index
@@ -273,8 +272,8 @@ export default {
       }
     },
     fill(index) { //填空题
-      let len = this.topic[2].length
-      this.currentType = 2
+      let len = this.topic[1].length
+      this.currentType = 1
       this.index = index
       if(index < len) {
         if(index < 0) {
@@ -297,8 +296,8 @@ export default {
       }
     },
     judge(index) { //判断题
-      let len = this.topic[3].length
-      this.currentType = 3
+      let len = this.topic[2].length
+      this.currentType = 2
       this.index = index
       if(this.index < len) {
         if(this.index < 0){

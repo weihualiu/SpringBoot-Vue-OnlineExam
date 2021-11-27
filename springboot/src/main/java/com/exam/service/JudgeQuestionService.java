@@ -2,19 +2,31 @@ package com.exam.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.exam.entity.FillQuestion;
 import com.exam.entity.JudgeQuestion;
 
 import java.util.List;
 
 public interface JudgeQuestionService {
 
-    List<JudgeQuestion> findByIdAndType(Integer paperId);
+    int add(JudgeQuestion judgeQuestion);
 
-    IPage<JudgeQuestion> findAll(Page<JudgeQuestion> page);
+    int deleteById(int questionId);
+
+    int update(JudgeQuestion question);
+
+    List<JudgeQuestion> findAll();
+
+    List<JudgeQuestion> findById(Integer questionId);
 
     JudgeQuestion findOnlyQuestionId();
 
-    int add(JudgeQuestion judgeQuestion);
+    IPage<JudgeQuestion> findByPage(Page<?> page);
 
-    List<Integer> findBySubject(String subject, Integer pageNo);
+    IPage<JudgeQuestion> findByTypeAndPage(Page<?> page,String subject);
+
+    List<JudgeQuestion> findByIdAndType(Integer paperId);
+
+    List<JudgeQuestion> findBySubject(List<Integer> typeIds);
+
 }

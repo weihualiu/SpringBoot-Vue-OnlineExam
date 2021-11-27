@@ -1,5 +1,7 @@
 package com.exam.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -8,24 +10,30 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Select("select userName,sex,email,cardId,role from user")
-    public List<User> findAll();
-
-    @Select("select userName,sex,email,cardId,role from user where adminId = #{userId}")
-    public User findById(Integer userId);
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
+    @Insert("insert into user(loginName, userName,gender,email,pwd,role) " +
+            "values(#{loginName}, #{userName},#{gender},#{email},#{pwd},#{role})")
+    int add(User user);
 
     @Delete("delete from user where userId = #{userId}")
-    public int deleteById(int userId);
+    int deleteById(int userId);
 
-    @Update("update user set userName = #{userName},sex = #{sex}," +
-            "email = #{email},pwd = #{pwd},cardId = #{cardId},role = #{role} where userId = #{userId}")
-    public int update(User user);
+    @Update("update user set loginName = #{loginName}, userName = #{userName},gender = #{gender}," +
+            "email = #{email},pwd = #{pwd},role = #{role} where userId = #{userId}")
+    int update(User user);
 
-    @Options(useGeneratedKeys = true, keyProperty = "userId")
-    @Insert("insert into user(userName,sex,email,pwd,cardId,role) " +
-            "values(#{userName},#{sex},#{email},#{pwd},#{cardId},#{role})")
-    public int add(User user);
+    @Select("select * from user")
+    List<User> findAll();
 
-    @Select("select userName,sex,email,cardId,role from user where role = #{roleId}")
-    public List<User> findAllByRole(String roleId);
+    @Select("select * from user where userId = #{userId}")
+    User findById(Integer userId);
+
+    @Select("select * from user order by userId")
+    IPage<User> findByPage(Page<?> page);
+
+    @Select("select * from user where role = #{roleId}")
+    List<User> findAllByRole(String roleId);
+
+    @Select("select * from user u, paper_user p where u.userId = p.userId and p.paperId = #{paperId} order by u.userId")
+    List<User> findUsersById(Integer paperId);
 }

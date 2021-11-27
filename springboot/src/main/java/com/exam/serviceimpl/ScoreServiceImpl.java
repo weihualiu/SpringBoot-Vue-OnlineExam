@@ -3,6 +3,7 @@ package com.exam.serviceimpl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.Score;
+import com.exam.entity.ScorePaperBean;
 import com.exam.mapper.ScoreMapper;
 import com.exam.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public IPage<Score> findById(Page page, Integer studentId) {
-        return scoreMapper.findById(page, studentId);
+    public IPage<ScorePaperBean> findByUserId(Page page, Integer userId) {
+        return scoreMapper.findByUserId(page, userId);
     }
 
     @Override
@@ -37,7 +38,13 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<Score> findByExamCode(Integer examCode) {
-        return scoreMapper.findByExamCode(examCode);
+    public IPage<Score> findByPaperId(Page page, Integer paperId) {
+        return scoreMapper.findByPaperId(page, paperId);
     }
+
+    @Override
+    public List<Score> findByPaperId(Integer paperId) {
+        return scoreMapper.findByPaperId(paperId);
+    }
+
 }

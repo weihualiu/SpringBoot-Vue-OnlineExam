@@ -8,8 +8,6 @@ import com.exam.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PaperServiceImpl implements PaperService {
 
@@ -17,12 +15,12 @@ public class PaperServiceImpl implements PaperService {
     private PaperMapper paperMapper;
 
     @Override
-    public List<PaperManage> findAll() {
-        return paperMapper.findAll();
+    public IPage<PaperManage> findAll(Page page) {
+        return paperMapper.findAll(page);
     }
 
     @Override
-    public List<PaperManage> findById(Integer paperId) {
+    public PaperManage findById(Integer paperId) {
         return paperMapper.findById(paperId);
     }
 
@@ -30,5 +28,16 @@ public class PaperServiceImpl implements PaperService {
     public int add(PaperManage paperManage) {
         return paperMapper.add(paperManage);
     }
+
+    @Override
+    public int update(PaperManage paperManage) {
+        return paperMapper.update(paperManage);
+    }
+
+    @Override
+    public IPage<PaperManage> findByUserId(Page page, Integer userId) {
+        return paperMapper.findByUserId(page, userId);
+    }
+
 
 }

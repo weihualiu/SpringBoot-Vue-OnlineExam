@@ -5,19 +5,18 @@ import lombok.Data;
 //填空题实体类
 @Data
 public class FillQuestion {
-    private Integer questionId;
+    private Integer questionId;  //问题id
 
-    private String subject;
+    private String question;    //试题内容
 
-    private String question;
+    private String answer;      //正确答案
 
-    private String answer;
+    private String analysis;    //题目解析
 
-    private Integer score;
+    private Integer score;    //份数
 
-    private String level;
+    private String level;     //难度等级
 
-    private String section;
+    private Integer typeId;    //所属题目类型
 
-    private String analysis; //题目解析
 }

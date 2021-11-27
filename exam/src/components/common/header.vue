@@ -65,9 +65,6 @@ export default {
       this.$cookies.remove("cname") //清除cookie
       this.$cookies.remove("cid")
       this.$cookies.remove("role")
-      if(role == 0) {
-        this.menu.pop()
-      }
     }
   },
   store

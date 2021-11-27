@@ -55,13 +55,39 @@ export default {
     },
     addData() {
       let role = this.$cookies.get("role")
-      if(role == 0) {
+      if(role == 0 && this.menu.length == 0) {
         this.menu.push({
-          index: '5',
-          title: '教师管理',
+          index: '1',
+          title: '用户管理',
           icon: 'icon-Userselect',
-          content:[{item1:'教师管理',path:'/teacherManage'},{item2: '添加教师',path: '/addTeacher'}],
+          content:[{item1:'用户管理',path:'/userManage'},{item2: '添加用户',path: '/addUser'}],
+        },
+        {
+            index: '2',
+            title: '题章节管理',
+            icon: 'icon-tiku',
+            content:[{item2:'章节管理',path:'/questionChapterManage'},{item3:'添加章节',path:'/addQuestionChapter'}],
         })
+      }else if(role == 1 && this.menu.length == 0){
+        this.menu.push({
+            index: '1',
+            title: '题库管理',
+            icon: 'icon-tiku',
+            content:[{item2:'所有题库',path:'/selectAnswer'},{item3:'增加题库',path:'/addAnswer'},{path: '/addAnswerChildren'}],
+          },
+          {
+            index: '2',
+            title: '试卷管理',
+            icon: 'icon-kechengbiao',
+            content:[{item2:'考试查询',path:'selectExam'},{item3:'添加考试',path:'/addExam'}],
+          },
+          {
+            index: '3',
+            title: '成绩查询',
+            icon: 'icon-performance',
+            content:[{item1:'学生成绩查询',path:'/allStudentsGrade'},{path: '/grade'},{item2: '成绩分段查询',path: '/selectExamToPart'},{path: '/scorePart'}],
+          },
+        )
       }
     }
   },

@@ -21,7 +21,8 @@ public class LoginController {
     @PostMapping("/login")
     public ApiResult login(@RequestBody Login login, HttpServletRequest request) {
 
-        Integer username = login.getUsername();
+        System.out.println(login.toString());
+        String username = login.getUsername();
         String password = login.getPassword();
         User userRes = loginService.userLogin(username, password);
         if (userRes != null) {
@@ -31,5 +32,12 @@ public class LoginController {
         }
 
         return ApiResultHandler.buildApiResult(400, "请求失败", null);
+    }
+
+    @PostMapping("/logout")
+    public ApiResult logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute(session.getId());
+        return ApiResultHandler.buildApiResult(200, "成功登出", null);
     }
 }

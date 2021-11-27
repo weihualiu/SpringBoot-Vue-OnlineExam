@@ -10,7 +10,7 @@
         <div class="bottom">
           <div class="container">
             <p class="title">账号登录</p>
-            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+            <el-form id="loginForm" :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
               <el-form-item label="用户名">
                 <el-input v-model.number="formLabelAlign.username" placeholder="请输入用户名"></el-input>
               </el-form-item>
@@ -34,14 +34,10 @@
     </el-row>
     <el-row class="footer">
       <el-col>
-        <p class="msg2">版权所有 ©2019 <!--重庆文理学院计科2班余晓江--> 保留所有权利  <a href="http://beian.miit.gov.cn/" target="_blank">渝ICP备19001371号</a></p>
+        <p class="msg2"></p>
       </el-col>
     </el-row>
-    <section class="remind">
-      <span>管理员账号：9527</span>
-      <span>教师账号：20081001</span>
-      <span>密码都是：123456</span>
-    </section>
+ 
   </div>
 </template>
 
@@ -56,8 +52,8 @@ export default {
       role: 2,
       labelPosition: 'left',
       formLabelAlign: {
-        username: '20154084',
-        password: '123456'
+        username: '',
+        password: ''
       }
     }
   },
@@ -100,6 +96,15 @@ export default {
     },
     clickTag(key) {
       this.role = key
+    }
+  },
+  created() {
+    var _self = this;
+    document.onkeydown = function(e){
+      var key = window.event.keyCode;
+      if(key == 13||key == 100){
+        _self.login();
+      }
     }
   },
   computed: mapState(["userInfo"]),

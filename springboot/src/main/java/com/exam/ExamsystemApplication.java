@@ -19,5 +19,6 @@ public class ExamsystemApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(ExamsystemApplication.class);
     }
+
 }
 

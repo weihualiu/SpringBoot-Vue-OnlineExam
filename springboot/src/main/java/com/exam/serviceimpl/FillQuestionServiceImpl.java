@@ -17,13 +17,28 @@ public class FillQuestionServiceImpl implements FillQuestionService {
     private FillQuestionMapper fillQuestionMapper;
 
     @Override
-    public List<FillQuestion> findByIdAndType(Integer paperId) {
-        return fillQuestionMapper.findByIdAndType(paperId);
+    public int add(FillQuestion fillQuestion) {
+        return fillQuestionMapper.add(fillQuestion);
     }
 
     @Override
-    public IPage<FillQuestion> findAll(Page<FillQuestion> page) {
-        return fillQuestionMapper.findAll(page);
+    public int deleteById(int userId) {
+        return fillQuestionMapper.deleteById(userId);
+    }
+
+    @Override
+    public int update(FillQuestion question) {
+        return fillQuestionMapper.update(question);
+    }
+
+    @Override
+    public List<FillQuestion> findAll() {
+        return fillQuestionMapper.findAll();
+    }
+
+    @Override
+    public List<FillQuestion> findById(Integer paperId) {
+        return fillQuestionMapper.findById(paperId);
     }
 
     @Override
@@ -32,12 +47,22 @@ public class FillQuestionServiceImpl implements FillQuestionService {
     }
 
     @Override
-    public int add(FillQuestion fillQuestion) {
-        return fillQuestionMapper.add(fillQuestion);
+    public IPage<FillQuestion> findByPage(Page<?> page) {
+        return fillQuestionMapper.findByPage(page);
     }
 
     @Override
-    public List<Integer> findBySubject(String subject, Integer pageNo) {
-        return fillQuestionMapper.findBySubject(subject, pageNo);
+    public IPage<FillQuestion> findByTypeAndPage(Page<?> page,String typeId) {
+        return fillQuestionMapper.findByTypeAndPage(page,typeId);
+    }
+
+    @Override
+    public List<FillQuestion> findByIdAndType(Integer paperId) {
+        return fillQuestionMapper.findByIdAndType(paperId);
+    }
+
+    @Override
+    public List<FillQuestion> findBySubject(List<Integer> typeIds) {
+        return fillQuestionMapper.findBySubject(typeIds);
     }
 }

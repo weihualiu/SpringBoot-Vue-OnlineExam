@@ -2,6 +2,7 @@ package com.exam.serviceimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.exam.entity.JudgeQuestion;
 import com.exam.entity.MultiQuestion;
 import com.exam.mapper.MultiQuestionMapper;
 import com.exam.service.MultiQuestionService;
@@ -17,13 +18,28 @@ public class MultiQuestionServiceImpl implements MultiQuestionService {
     private MultiQuestionMapper multiQuestionMapper;
 
     @Override
-    public List<MultiQuestion> findByIdAndType(Integer PaperId) {
-        return multiQuestionMapper.findByIdAndType(PaperId);
+    public int add(MultiQuestion question) {
+        return multiQuestionMapper.add(question);
     }
 
     @Override
-    public IPage<MultiQuestion> findAll(Page<MultiQuestion> page) {
-        return multiQuestionMapper.findAll(page);
+    public int deleteById(int userId) {
+        return multiQuestionMapper.deleteById(userId);
+    }
+
+    @Override
+    public int update(MultiQuestion question) {
+        return multiQuestionMapper.update(question);
+    }
+
+    @Override
+    public List<MultiQuestion> findAll() {
+        return multiQuestionMapper.findAll();
+    }
+
+    @Override
+    public List<MultiQuestion> findById(Integer paperId) {
+        return multiQuestionMapper.findById(paperId);
     }
 
     @Override
@@ -32,12 +48,22 @@ public class MultiQuestionServiceImpl implements MultiQuestionService {
     }
 
     @Override
-    public int add(MultiQuestion multiQuestion) {
-        return multiQuestionMapper.add(multiQuestion);
+    public IPage<MultiQuestion> findByPage(Page<?> page) {
+        return multiQuestionMapper.findByPage(page);
     }
 
     @Override
-    public List<Integer> findBySubject(String subject, Integer pageNo) {
-        return multiQuestionMapper.findBySubject(subject, pageNo);
+    public IPage<MultiQuestion> findByTypeAndPage(Page<?> page, String typeId) {
+        return multiQuestionMapper.findByTypeAndPage(page, typeId);
+    }
+
+    @Override
+    public List<MultiQuestion> findByIdAndType(Integer PaperId) {
+        return multiQuestionMapper.findByIdAndType(PaperId);
+    }
+
+    @Override
+    public List<MultiQuestion> findBySubject(List<Integer> typeIds) {
+        return multiQuestionMapper.findBySubject(typeIds);
     }
 }

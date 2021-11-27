@@ -3,25 +3,22 @@
   <div id="msg">
     <div class="title">
       <span>试卷列表</span>
-      <span>/  {{examData.source}}</span>
+      <span>/  {{examData.description}}</span>
     </div>
     <div class="wrapper">
       <ul class="top">
-        <li class="example">{{examData.source}}</li>
+        <li class="example">{{examData.paperManage.description}}</li>
         <li><i class="iconfont icon-pen-"></i></li>
         <li><i class="iconfont icon-share"></i></li>
         <li class="right">
           <div>
             <span class="count">总分</span>
-            <span class="score">{{score[0]+score[1]+score[2]}}</span>
+            <span class="score">{{examData.paperManage.totalScore}}</span>
           </div>
         </li>
       </ul>
       <ul class="bottom">
-        <li>更新于{{examData.examDate}}</li>
-        <li>来自 {{examData.institute}}</li>
-        <li class="btn">{{examData.type}}</li>
-        <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
+        <li class="right"><el-button @click="toAnswer(examData.paperManage.paperId)">开始答题</el-button></li>
       </ul>
       <ul class="info">
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="iconfont icon-info"></i>考生须知</a></li>
@@ -32,62 +29,39 @@
         <el-collapse-item class="header" name="0">
           <template slot="title" class="stitle" >
             <div class="title">
-              <span>{{examData.source}}</span><i class="header-icon el-icon-info"></i>
-              <span class="time">{{examData.totalScore}}分 / {{examData.totalTime}}分钟</span>
-              <el-button type="primary" size="small">点击查看试题详情</el-button>
+              <span>{{examData.description}}</span><i class="header-icon el-icon-info"></i>
+              <span class="time">{{examData.paperManage.totalScore}}分 / {{examData.paperManage.totalTime}}分钟</span>
             </div>
           </template>
           <el-collapse class="inner">
             <el-collapse-item>
               <template slot="title" name="1">
-                <div class="titlei">选择题 (共{{topicCount[0]}}题 共计{{score[0]}}分)</div>
+                <div class="titlei">填空题 (共{{topicCount[0]}}题 共计{{score[0]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[1]" :key="index">
-                  <li>{{index+1}}. {{list.question}} {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="2">
-                <div class="titlei">填空题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
+                <div class="titlei">选择题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[2]" :key="index">
-                  <li>{{topicCount[0]+index+1}}.{{list.question}}  {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="3">
                 <div class="titlei">判断题 (共{{topicCount[2]}}题 共计{{score[2]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[3]" :key="index">
-                  <li>{{topicCount[0]+topicCount[1]+index+1}}. {{list.question}} {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
           </el-collapse>
         </el-collapse-item>
         
       </el-collapse>
     </div>
-    <!--考生须知对话框-->
-    <el-dialog
-      title="考生须知"
-      :visible.sync="dialogVisible"
-      width="30%">
-      <span>{{examData.tips}}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">知道了</el-button>
-      </span>
-    </el-dialog>
+    
   </div>
 </template>
 
 <script>
+import store from '@/vuex/store'
 export default {
+  store,
   data() {
     return {
       dialogVisible: false, //对话框属性
@@ -95,8 +69,7 @@ export default {
       topicCount: [],//每种类型题目的总数
       score: [],  //每种类型分数的总数
       examData: { //考试信息
-        // source: null,
-        // totalScore: null,
+        paperManage:{}
       },
       topic: {  //试卷信息
 
@@ -109,28 +82,49 @@ export default {
   methods: {
     //初始化页面数据
     init() {
-      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-        res.data.data.examDate = res.data.data.examDate.substr(0,10)
-        this.examData = { ...res.data.data}
-        let paperId = this.examData.paperId
-        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-          this.topic = {...res.data}
-          let keys = Object.keys(this.topic) //对象转数组
-          keys.forEach(e => {
-            let data = this.topic[e]
-            this.topicCount.push(data.length)
-            let currentScore = 0
-            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-              currentScore += data[i].score
-            }
-            this.score.push(currentScore) //把每种题型总分存入score
-          })
-        })
+      //获取路由传递过来的试卷编号
+      let examCode = sessionStorage.getItem("paperId");
+      console.log("paperID:" + examCode);
+      this.$axios({
+        url: `/api/exam2002`,
+        method: 'post',
+        data: {
+          "paperId":examCode
+        }
+      }).then(res => {  //通过examCode请求试卷详细信息
+        if(res.data.code == 200) {
+          this.examData = { ...res.data.data};
+          // 存储当前试卷题库
+          sessionStorage.setItem("paperQuestions", JSON.stringify(this.examData));
+          let fillRows = Object.keys(this.examData.questions.fill);
+          let judgeRows = Object.keys(this.examData.questions.judge);
+          let multiRows = Object.keys(this.examData.questions.multi);
+          
+          this.topicCount.push(fillRows.length);
+          let currentScore = 0;
+          for(let i = 0; i< fillRows.length; i++) {
+            currentScore += this.examData.questions.fill[i].score;
+          }
+          this.score.push(currentScore);
+          this.topicCount.push(multiRows.length);
+          let currentScore1 = 0;
+          for(let i = 0; i< multiRows.length; i++) {
+            currentScore1 += this.examData.questions.multi[i].score;
+          }
+          this.score.push(currentScore1);
+          this.topicCount.push(judgeRows.length);
+          let currentScore2 = 0;
+          for(let i = 0; i< judgeRows.length; i++) {
+            currentScore2 += this.examData.questions.judge[i].score;
+          }
+          this.score.push(currentScore2);
+        }else if(res.data.code == 100) {
+            this.$router.push({path: "/"})
+        }
       })
     },
     toAnswer(id) {
-      this.$router.push({path:"/answer",query:{examCode: id}})
+      this.$router.push({name:"answer"})
     },
   }
 }

@@ -8,13 +8,23 @@ import java.util.List;
 
 public interface MultiQuestionService {
 
-    List<MultiQuestion> findByIdAndType(Integer PaperId);
+    int add(MultiQuestion question);
 
-    IPage<MultiQuestion> findAll(Page<MultiQuestion> page);
+    int deleteById(int questionId);
+
+    int update(MultiQuestion question);
+
+    List<MultiQuestion> findAll();
+
+    List<MultiQuestion> findById(Integer questionId);
 
     MultiQuestion findOnlyQuestionId();
 
-    int add(MultiQuestion multiQuestion);
+    IPage<MultiQuestion> findByPage(Page<?> page);
 
-    List<Integer> findBySubject(String subject, Integer pageNo);
+    IPage<MultiQuestion> findByTypeAndPage(Page<?> page,String subject);
+
+    List<MultiQuestion> findByIdAndType(Integer paperId);
+
+    List<MultiQuestion> findBySubject(List<Integer> typeIds);
 }

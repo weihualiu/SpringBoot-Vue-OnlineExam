@@ -4,5 +4,5 @@ import com.exam.entity.User;
 
 public interface LoginService {
 
-    public User userLogin(Integer username, String password);
+    public User userLogin(String username, String password);
 }

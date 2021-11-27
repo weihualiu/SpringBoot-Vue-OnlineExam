@@ -7,10 +7,6 @@ import lombok.Data;
 public class MultiQuestion {
     private Integer questionId;
 
-    private String subject;
-
-    private String section;
-
     private String answerA;
 
     private String answerB;
@@ -28,5 +24,7 @@ public class MultiQuestion {
     private String analysis; //题目解析
 
     private Integer score;
+
+    private Integer typeId;
 
 }

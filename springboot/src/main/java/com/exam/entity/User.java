@@ -3,15 +3,15 @@ package com.exam.entity;
 public class User {
     private Integer userId;
 
+    private String loginName;
+
     private String userName;
 
-    private String sex;
+    private String gender;
 
     private String email;
 
     private String pwd;
-
-    private String cardId;
 
     private String role;
 
@@ -31,12 +31,12 @@ public class User {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -55,19 +55,19 @@ public class User {
         this.pwd = pwd == null ? null : pwd.trim();
     }
 
-    public String getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(String cardId) {
-        this.cardId = cardId == null ? null : cardId.trim();
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role == null ? null : role.trim();
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 }
